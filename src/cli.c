@@ -50,7 +50,7 @@ static void usage() {
     puts("  -b, --binary <binary>     use a binary file as patch");
     puts("  -x, --hex <hex string>    hex string of the patch");
     puts("  -q, --quiet               suppress match count messages");
-    puts("  --rva                     print addresses as architecture-relative (RVA) offsets instead of file offsets");
+    puts("  -R, --rva                 print addresses as architecture-relative (RVA) offsets instead of file offsets");
     puts("  -v, --version             show version number");
     puts("  -h, --help                show this usage text");
     puts("  -r, --regexp              use regular expressions for symbol matching");
