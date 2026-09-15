@@ -83,7 +83,7 @@ extern data_t o_patch_data;           /**< User-provided custom patch bytes. */
 extern bool o_use_builtin_patch;      /**< Flag indicating if a built-in patch is used. */
 extern int o_builtin_idx;             /**< Index of the selected built-in patch. */
 extern bool o_quiet;                  /**< Quiet flag to suppress non-essential output. */
-extern bool o_vmaddr_output;          /**< Flag to print virtual addresses instead of file offsets. */
+extern bool o_rva_output;             /**< Flag to print architecture-relative (RVA) addresses instead of file offsets. */
 
 /**
  * @brief Parses command-line arguments and sets global configuration flags.

@@ -82,10 +82,10 @@ static void print_search_info(search_mode_t search_mode, search_case_t search_ca
 /**
  * @brief Prints the address formatting type being used in the output.
  *
- * @param is_vmaddr_output True if printing Virtual Memory addresses, false for file offsets.
+ * @param is_rva_output True if printing RVA offsets, false for file offsets.
  */
-static void print_addresses_info(bool is_vmaddr_output) {
-    printf("Addresses type: %s\n", is_vmaddr_output ? "Virtual memory address (vmaddr)" : "File offset (from start of file)");
+static void print_addresses_info(bool is_rva_output) {
+    printf("Addresses type: %s\n", is_rva_output ? "Architecture-relative (RVA)" : "File offset (from start of file)");
 }
 
 /**
@@ -115,7 +115,7 @@ static void print_lookup_results_range(const patch_off_list_t *poffs, size_t sta
 
     for (size_t i = start; i < end; i++) {
         const patch_off_t *poff = &poffs->items[i];
-        const long display_value = o_vmaddr_output ? poff->addr : poff->fileoff;
+        const long display_value = o_rva_output ? poff->addr : poff->fileoff;
         if (show_symbol_names && poff->symbol_name != NULL)
             printf("0x%lx: %s\n", display_value, poff->symbol_name);
         else
@@ -299,11 +299,11 @@ int main(int argc, char **argv) {
         if (o_quiet) {
             for (size_t i = 0; i < poffs.count; i++) {
                 const patch_off_t *poff = &poffs.items[i];
-                const long display_value = o_vmaddr_output ? poff->addr : poff->fileoff;
+                const long display_value = o_rva_output ? poff->addr : poff->fileoff;
                 printf("0x%lx\n", display_value);
             }
         } else {
-            print_addresses_info(o_vmaddr_output);
+            print_addresses_info(o_rva_output);
             print_search_info(o_search_mode, o_search_case);
             print_lookup_summary(poffs.count);
         }
@@ -317,7 +317,7 @@ int main(int argc, char **argv) {
             }
         }
         if (!o_quiet) {
-            print_addresses_info(o_vmaddr_output);
+            print_addresses_info(o_rva_output);
             print_search_info(o_search_mode, o_search_case);
             if (patched <= 1)
                 printf("%d(%zu) match patched\n", patched, poffs.count);

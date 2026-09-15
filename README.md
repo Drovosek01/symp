@@ -88,7 +88,7 @@ Category in `ObjC` is supported, but note that **Category name** should be used 
 | `-s`/`--substring` | use substring matching for symbol lookup | `-s`               |
 | `-i`/`--ignore-case` | make symbol lookup case-insensitive | `-i`               |
 | `-c`/`--case-sensitive` | make symbol lookup case-sensitive (default) | `-c`               |
-| `--vmaddr`         | print addresses as architecture-relative offsets instead of file offsets | `--vmaddr`           |
+| `-R`/`--rva`         | print addresses as architecture-relative (RVA) offsets instead of file offsets | `--rva`           |
 
 Only one of `-p`, `-b`, or `-x` may be specified. If none is provided, the tool prints the symbol's file offset.
 

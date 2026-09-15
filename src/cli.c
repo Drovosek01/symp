@@ -28,10 +28,9 @@ int o_builtin_idx = -1;
 
 /** @brief Suppresses match count and non-critical messages when true. */
 bool o_quiet = false;
-bool o_rva = false;
 
-/** @brief Prints target addresses as virtual memory addresses instead of file offsets when true. */
-bool o_vmaddr_output = false;
+/** @brief Prints target addresses as architecture-relative (RVA) instead of file offsets when true. */
+bool o_rva_output = false;
 
 /** @brief Symbol matching mode (FULL_STRING_MATCH, REGEXP_MATCH, or SUBSTRING_MATCH). */
 search_mode_t o_search_mode = FULL_STRING_MATCH;
@@ -51,7 +50,7 @@ static void usage() {
     puts("  -b, --binary <binary>     use a binary file as patch");
     puts("  -x, --hex <hex string>    hex string of the patch");
     puts("  -q, --quiet               suppress match count messages");
-    puts("  --vmaddr                  print addresses as architecture-relative offsets");
+    puts("  --rva                     print addresses as architecture-relative (RVA) offsets instead of file offsets");
     puts("  -v, --version             show version number");
     puts("  -h, --help                show this usage text");
     puts("  -r, --regexp              use regular expressions for symbol matching");
@@ -85,7 +84,7 @@ int parse_arguments(int argc, char **argv) {
             {"binary",         required_argument, 0, 'b'},
             {"hex",            required_argument, 0, 'x'},
             {"quiet",          no_argument,       0, 'q'},
-            {"vmaddr",         no_argument,       0, 0},
+            {"rva",            no_argument,       0, 'R'},
             {"version",        no_argument,       0, 'v'},
             {"help",           no_argument,       0, 'h'},
             {"regexp",         no_argument,       0, 'r'},
@@ -95,7 +94,7 @@ int parse_arguments(int argc, char **argv) {
             {0, 0, 0, 0}
         };
         int option_index = 0;
-        int c = getopt_long(argc, argv, "a:p:b:x:qvhrsci", long_options, &option_index);
+        int c = getopt_long(argc, argv, "a:p:b:x:qvhrsciR", long_options, &option_index);
         if (c == -1)
             break;
 
@@ -221,14 +220,10 @@ int parse_arguments(int argc, char **argv) {
             o_quiet = true;
             break;
 
-        case 0:
-            /* Handle options without single-letter shortcuts (e.g., --vmaddr) */
-            if (strcmp(long_options[option_index].name, "vmaddr") == 0) {
-                o_vmaddr_output = true;
-                break;
-            }
-            /* fall through */
-
+        case 'R':
+            o_rva_output = true;
+            break;
+        
         case 'v':
             /* Output version information */
             printf("symp v%s\n", VERSION_STR);
