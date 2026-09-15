@@ -28,6 +28,7 @@ int o_builtin_idx = -1;
 
 /** @brief Suppresses match count and non-critical messages when true. */
 bool o_quiet = false;
+bool o_rva = false;
 
 /** @brief Prints target addresses as virtual memory addresses instead of file offsets when true. */
 bool o_vmaddr_output = false;
